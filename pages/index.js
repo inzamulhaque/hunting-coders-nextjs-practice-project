@@ -1,6 +1,5 @@
 import Head from "next/head";
 import Image from "next/image";
-import Link from "next/link";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
@@ -27,31 +26,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <nav className={styles.mainnav}>
-        <ul>
-          <Link href="/">
-            <a>
-              <li>Home</li>
-            </a>
-          </Link>
-          <Link href="/about">
-            <a>
-              <li>About</li>
-            </a>
-          </Link>
-          <Link href="/blog">
-            <a>
-              <li>Blog</li>
-            </a>
-          </Link>
-          <Link href="/contact">
-            <a>
-              <li>Contact</li>
-            </a>
-          </Link>
-        </ul>
-      </nav>
-
       <main className={styles.main}>
         <h1 className={styles.title}>
           <span className="title">Hunting Coders</span>
@@ -70,15 +44,7 @@ export default function Home() {
         <p className={styles.description}>Hunting Coders</p>
 
         <div className="blogs">
-          <h2>Popular Blogs</h2>
-          <div className="blogItem">
-            <h3>How to learn JavaScript in 2022?</h3>
-            <p>
-              JavaScript is the language used to design logic for the web. Lorem
-              ipsum dolor sit amet consectetur adipisicing elit. Hic error
-              voluptatum impedit!
-            </p>
-          </div>
+          <h2>Latest Blogs</h2>
           <div className="blogItem">
             <h3>How to learn JavaScript in 2022?</h3>
             <p>
