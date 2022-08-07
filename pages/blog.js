@@ -1,46 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "../styles/Blog.module.css";
 
-const Blog = () => {
+const Blog = (props) => {
+  // console.log(props);
+  const [blogs, setBlogs] = useState([]);
+  // useEffect(() => {
+  //   fetch("http://localhost:3000/api/blogs")
+  //     .then((res) => res.json())
+  //     .then((data) => setBlogs(data));
+  // }, []);
+
   return (
     <>
       <div className={styles.container}>
         <main className={styles.main}>
           <div className="blogs">
-            <div>
-              <Link href={`/blogpost/learn-javascript`}>
-                <h3 className={styles.blogItemh3}>
-                  How to learn JavaScript in 2022?
-                </h3>
-              </Link>
-              <p>
-                JavaScript is the language used to design logic for the web.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
-                error voluptatum impedit!
-              </p>
-            </div>
-            <div className="blogItem">
-              <h3>How to learn JavaScript in 2022?</h3>
-              <p>
-                JavaScript is the language used to design logic for the web.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
-                error voluptatum impedit!
-              </p>
-            </div>
-            <div className="blogItem">
-              <h3>How to learn JavaScript in 2022?</h3>
-              <p>
-                JavaScript is the language used to design logic for the web.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
-                error voluptatum impedit!
-              </p>
-            </div>
+            {props?.allBlogs?.map((blogItem, index) => {
+              return (
+                <div key={index}>
+                  <Link href={`/blogpost/${blogItem.slug}`}>
+                    <h3 className={styles.blogItemh3}>{blogItem.title}</h3>
+                  </Link>
+                  <p className={styles.blogItemp}>
+                    {blogItem.content.substr(0, 140)}...
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </main>
       </div>
     </>
   );
 };
+
+export async function getServerSideProps(context) {
+  let data = await fetch("http://localhost:3000/api/blogs");
+  let allBlogs = await data.json();
+  return {
+    props: { allBlogs }, // will be passed to the page component as props
+  };
+}
 
 export default Blog;

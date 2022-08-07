@@ -1,25 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styles from "../../styles/BlogPost.module.css";
 
-const slug = () => {
-  const router = useRouter();
-  const { slug } = router.query;
+const slug = (props) => {
+  // const router = useRouter();
+  // const [blog, setBlog] = useState({});
+
+  // useEffect(() => {
+  //   const { slug } = router.query;
+  //   if (slug) {
+  //     fetch(`http://localhost:3000/api/getblog?slug=${slug}`)
+  //       .then((res) => res.json())
+  //       .then((data) => setBlog(data));
+  //   }
+  // }, [router.isReady]);
+
   return (
     <>
       <div className={styles.container}>
         <main className={styles.main}>
-          <h1>Title of this page: {slug}</h1>
+          <h1>Title of this page: {props?.blog?.title}</h1>
           <hr />
-          <div>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-            Praesentium, excepturi sunt. Voluptate possimus laboriosam,
-            consequuntur minus expedita optio sapiente dolor? Numquam, eius et.
-          </div>
+          <div>{props?.blog?.content}</div>
         </main>
       </div>
     </>
   );
 };
+
+export async function getServerSideProps(context) {
+  const { slug } = context.query;
+  let data, blog;
+  if (slug) {
+    data = await fetch(`http://localhost:3000/api/getblog?slug=${slug}`);
+    blog = await data.json();
+  }
+
+  return {
+    props: { blog }, // will be passed to the page component as props
+  };
+}
 
 export default slug;
